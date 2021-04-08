@@ -4,12 +4,16 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Illuminate\Routing\ResponseFactory;
 
 use App\Channel;
 
 use App\Billing\BankPaymentGateway;
 use App\Billing\CreditPaymentGateway;
 use App\Billing\PaymentGatewayContract;
+
+use App\PostcardSendingService;
 
 use App\Http\View\Composers\ChannelsComposer;
 
@@ -52,5 +56,23 @@ class AppServiceProvider extends ServiceProvider
         // Option 3 - For Dedicated view
         // View::composer(['post.*','channel.index'], ChannelsComposer::class);
         View::composer('partials.channels.*', ChannelsComposer::class);
+
+        // *.*.* Facades implementation *.*.* //
+        $this->app->singleton('postCard', function ($app){
+            return new PostcardSendingService('PAK', 14, 1947);
+        });
+
+        // *.*.* Macros implementation *.*.* //
+        Str::macro('partNum', function ($pNum) {
+            return 'ABC-' . substr($pNum, 0, 3) . '-' . substr($pNum, 3);
+        });
+
+        ResponseFactory::macro('errorJson', function ($message = 'Something went wrong') {
+            return 
+            [
+                'message' => $message,
+                'error_code' => '123'
+            ];
+        });
     }
 }
