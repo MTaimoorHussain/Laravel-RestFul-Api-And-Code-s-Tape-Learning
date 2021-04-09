@@ -31,6 +31,7 @@ Route::get('/pay', 'PayOrderController@store');
 Route::get('/channels', 'ChannelController@index');
 
 // *** post *** //
+Route::get('/posts/index', 'PostController@index');
 Route::get('/posts/create', 'PostController@create');
 
 // *** facades *** //

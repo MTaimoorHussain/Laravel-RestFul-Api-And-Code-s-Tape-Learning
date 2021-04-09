@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Option 1 - For every single view 
-        // View::share('channels', Channel::orderBy('name')->get());
+        View::share('channels', Channel::orderBy('name')->get());
 
         // Option 2 - For defined view OR Granular Views with wildcards
         // View::composer(['post.*','channel.index'], function($view){
