@@ -47,7 +47,8 @@ Route::get('/facades', function(){
 
 // *** Macro *** //
 Route::get('/macros',function(){
-	// dd(Str::partNum('1231231212'));
+	dd(Str::partNum('1231231212'));
+	dd(Str::prefix('1231231212'));
 	
 	return Response::errorJson('Yes!Somthing went wrong..');
 });

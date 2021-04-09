@@ -14,6 +14,7 @@ use App\Billing\CreditPaymentGateway;
 use App\Billing\PaymentGatewayContract;
 
 use App\PostcardSendingService;
+use App\Mixins\StrMixins;
 
 use App\Http\View\Composers\ChannelsComposer;
 
@@ -66,6 +67,8 @@ class AppServiceProvider extends ServiceProvider
         Str::macro('partNum', function ($pNum) {
             return 'ABC-' . substr($pNum, 0, 3) . '-' . substr($pNum, 3);
         });
+
+        Str::mixin(new StrMixins(), false);
 
         ResponseFactory::macro('errorJson', function ($message = 'Something went wrong') {
             return 
